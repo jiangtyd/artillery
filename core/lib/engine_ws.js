@@ -5,7 +5,6 @@
 'use strict';
 
 const async = require('async');
-const atob = require('atob');
 const _ = require('lodash');
 const WebSocket = require('ws');
 const debug = require('debug')('ws');
@@ -78,7 +77,7 @@ WSEngine.prototype.step = function (requestSpec, ee) {
       payload = payload.toString();
 
       if (payload.startsWith(BASE64_MARKER)) {
-        payload = atob(payload);
+        payload = Buffer.from(payload.substring(BASE64_MARKER.length), 'base64');
       }
     }
 
